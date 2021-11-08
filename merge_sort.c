@@ -1,95 +1,82 @@
-#include<stdio.h>
+/* C program for Merge Sort */
+#include <stdio.h>
+#include <stdlib.h>
 
-void merge(int A[] , int n1 , int index1 , int B[], int n2 , int index2 , int C[]  , int index  ){
-    while(n1&&n2){
-        if(A[index1] < B[index2]){
-             C[index] = A[index1];
-             index ++ ; 
-             index1 ++ ;
-             n1-- ; 
-             
+void merge(int arr[], int l, int m, int r)
+{
+    int i , j , k  ;
+    int n1 , n2 ;
+    n1 = m-l+1;
+    n2 = r-m ;
+    int L[n1];
+    int R[n2];
+
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
+
+    i = 0 ; 
+    j  = 0 ;
+    k = l ; 
+    
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
         }
-        else{
-            C[index] = B[index2];
-            index++;
-            index2++;
-            n2--;
+        else {
+            arr[k] = R[j];
+            j++;
         }
-
-    }
-    while(n1){
-            C[index] = A[index1];
-            index++;
-            index1++;
-            n1--;
-
+        k++;
     }
 
-    while(n2){
-        C[index] = B[index2];
-        index++;
-        index2++;
-        n2--;
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
     }
 
 }
 
 
-void mergepass(int A[] , int N , int sub_array_size , int B[]){
-int Q , S , R ;
-Q = N/2*sub_array_size ; 
-S = 2*sub_array_size*Q ; 
-R = N - S ; 
-int j , LB ; 
-
-for(j = 0 ; j<Q ; j++){
-    LB = 2*j*sub_array_size ;
-    merge(A , sub_array_size , LB , A , sub_array_size , LB + sub_array_size , B , LB);
+void mergeSort(int arr[], int l, int r){
+     
+    if(l<r){
+        int m = l + (r - l) / 2;
+        
+        mergeSort(arr,l,m);
+        mergeSort(arr,m+1,r);
+        merge(arr,l,m,r);
+    }
+    
 }
 
-if(R<=sub_array_size){
-  for(j=0 ; j<R ; j++){
-      B[j+S]  = A[j+S];
-  }
+void printArray(int A[], int size)
+{
+	int i;
+	for (i = 0; i < size; i++)
+		printf("%d ", A[i]);
+	printf("\n");
 }
 
-else{
-    merge(A , sub_array_size , S , A , R - sub_array_size , S + sub_array_size ,B ,S );
-}  
-
-}
-
-
-
-void merge_sort(int A[] ,int array_size ){
-
-int sub_array_size = 1; 
-int B[array_size] ; 
-
-while(sub_array_size < array_size){
-    mergepass(A , array_size , sub_array_size , B);
-    mergepass(B,array_size , 2*sub_array_size , A);
-    sub_array_size = sub_array_size*4 ;
-}
-
-}
-
-
-
+/* Driver code */
 int main()
-{    
-    int  i , j , array_size = 13 ; 
-    int A[13]  = { 13 , 15 , 2 , 97 , 36 , 25 , 68, 7, 88 , 72 ,69 , 90 , 47 } ; 
+{
+	int arr[] = { 12, 11, 13, 5, 6, 7 };
+	int arr_size = sizeof(arr) / sizeof(arr[0]);
 
-    printf("this is the original array");
-    for(i = 0 ;  i <= (array_size - 1) ; i++){
-        printf(" %d  , ",A[i]);
-    }
+	printf("Given array is \n");
+	printArray(arr, arr_size);
+	mergeSort(arr, 0, arr_size - 1);
 
-    merge_sort( A , array_size);
-    printf("\n");
-    for(j = 0 ;  j <= (array_size - 1) ; j++){
-        printf(" %d  , ",A[i]);
-    }    
-    return(0);
+	printf("\nSorted array is \n");
+	printArray(arr, arr_size);
+	return 0;
 }

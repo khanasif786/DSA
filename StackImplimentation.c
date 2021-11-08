@@ -20,7 +20,7 @@ int choice  , item  ;
 Stack = CreateStack(3);
 while(1){
     printf("1.PUSH 2.POP 3.Display\nEnter your Choice\n" );
-    scanf("\n%d",&choice);
+    scanf("%d",&choice);
 
     switch(choice){
         case 1:
@@ -33,13 +33,14 @@ while(1){
         break;
         case 3:
         if (!isEmpty(Stack)){
-         printf("\nstack is\n");
+         printf("stack is: ");
         for(int i=0;i<=Stack->top;i++){
-         printf("%d",Stack->ArrayPointer[i]);
+         printf("%d ",Stack->ArrayPointer[i]);
         }
+        printf("\n\n");
         }
         else
-        printf("stack is empty\n");
+        printf("stack is empty\n\n");
         break;
     }
 }
@@ -58,10 +59,10 @@ void push(struct StackArray* StackPointer,int item){
 if(!isFull(StackPointer)){
 StackPointer->ArrayPointer[(StackPointer->top)+1] = item ;
 StackPointer->top++;
-printf("Succesfully Pushed item into the Stack\n");
+printf("Succesfully Pushed item into the Stack\n\n");
 }
 else
-printf("stack is full\n");
+printf("stack is full\n\n");
 }
 
 void pop(struct StackArray* StackPointer){
@@ -69,10 +70,10 @@ int item ;
 if(!isEmpty(StackPointer)){
 item  = StackPointer->ArrayPointer[StackPointer->top];
 StackPointer->top--; 
-printf("popped item is %d\n",item);
+printf("popped item is %d\n\n",item);
 }
 else
-printf("stack is empty\n");
+printf("stack is empty\n\n");
 }
 
 int isFull(struct StackArray* StackPointer){
